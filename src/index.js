@@ -4,14 +4,11 @@ const route = require("./route/route");
 const app = express();
 app.use(express.json());
 
-mongoose
-  .connect(
-    "mongodb+srv://harsh-developer:aA12345678@cluster0.lxbes.mongodb.net/customerDiscountApp?retryWrites=true&w=majority",
-    { useNewUrlParser: true }
-  )
-
-  .then(() => console.log("MongoDb is connected..."))
-  .catch((err) => console.log(err));
+mongoose.connect("mongodb+srv://LalitaMahule:lali123456789@cluster0.ypjvt.mongodb.net/CustomerDiscountApp?retryWrites=true&w=majority",{
+    useNewUrlParser: true
+})
+.then( () => console.log("MongoDB is connected"))
+.catch ( ( err => console.log(err)))
 
 app.use("/", route);
 
