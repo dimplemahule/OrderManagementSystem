@@ -21,11 +21,24 @@ const orderDetails = async (req, res) => {
     if (!price) {
       return res.status(400).send({ status: false, msg: "Please enter product price!" });
     }
+    let checkCustomer=await customerModel.findById(customerId)
+    
+      let currPrice
+      if(checkCustomer.categorized=="gold"){
+        currPrice=(price-(price*10/100))
+      }else if(checkCustomer.categorized=="platinum"){
+        currPrice=(price-(price*20/100))
+      }else{
+        currPrice=price
+      }
     let makeOrder = await orderModel.create(productDetails);
-    await customerModel.findOneAndUpdate(
-      { _id: customerId },
-      { $inc: { totalOrder: +1 } }
-    );
+    await customerModel.findOneAndUpdate({ _id: customerId },{ $inc: { totalOrder: +1 } });
+    if(checkCustomer.orderCount>=10&&checkCustomer.orderCount<20){
+      await customerModel.findByIdAndUpdate({_id:customerId},{$set:{categorized:"gold"}})
+      
+    }else if(checkCustomer.orderCount>=20){
+      await customerModel.findByIdAndUpdate({_id:customerId},{$set:{categorized:"platinum"}})
+    }
     return res.status(201).send({ status: true, data: makeOrder });
   } catch (err) {
     res.status(500).send({ status: false, msg: err.message });

@@ -16,27 +16,21 @@ const registerCustomer = async (req, res) => {
       return res.status(400).send({ status: false, msg: "name is required" });
     }
     if (!isValidString(firstName)) {
-      return res
-        .status(400)
-        .send({ status: false, msg: "firstName is not valid" });
+      return res.status(400).send({ status: false, msg: "firstName is not valid" });
     }
 
     if (!lastName) {
       return res.status(400).send({ status: false, msg: "name is required" });
     }
     if (!isValidString(lastName)) {
-      return res
-        .status(400)
-        .send({ status: false, msg: "lastName is not valid" });
+      return res.status(400).send({ status: false, msg: "lastName is not valid" });
     }
 
     if (!phone) {
       return res.status(400).send({ status: false, msg: "phone is requird" });
     }
     if (!phoneRegex.test(phone)) {
-      return res
-        .status(400)
-        .send({ status: false, msg: "Phone number is not valid" });
+      return res.status(400).send({ status: false, msg: "Phone number is not valid" });
     }
 
     let createdData = await customerModel.create(customerDetails);
